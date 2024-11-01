@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './AppQuickStart.css';
+import './styles.css';
 import {useState} from 'react';
 
 export default function AppQuickStart() {
@@ -76,7 +76,7 @@ function ShoppingList() {
     );
 }
 
-function MyButton2({ count, onClick }: any) {
+function MyButton2({ count, onClick }) {
 
     return (
         <button onClick={onClick}>
