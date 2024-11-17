@@ -1,0 +1,62 @@
+.container {
+	height: 100vh;
+}
+
+.tab {
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	display: flex;
+}
+
+.tab button {
+	background-color: inherit;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+}
+
+.tab button:hover {
+	background-color: #ddd;
+}
+
+.tab button.active {
+	background-color: #ccc;
+}
+
+.content {
+	display: flex;
+}
+
+.controls {
+	flex: 1;
+	border: 1px solid #ccc;
+}
+
+.canvas {
+	border: 1px solid #ccc;
+	overflow: auto;
+	flex: 2;
+}
+
+.image-container {
+	background-image: url('./Images/description.png');
+	background-size: cover;
+	margin: 0 auto;
+	width: 471px;
+	height: 587px;
+}
+
+.stepper-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.stepper-item {
+	border: 1px solid #ccc;
+	text-align: center;
+	font-size: 22px;
+}
