@@ -49,14 +49,144 @@
 	height: 587px;
 }
 
-.stepper-container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+.table {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 10px;
 }
 
-.stepper-item {
+.table-spacing {
+	height: 30px;
+}
+
+.td {
+	width: 70px;
 	border: 1px solid #ccc;
+	border-radius: 10px;
 	text-align: center;
 	font-size: 22px;
+}
+
+.tr {
+	height: 50px;
+}
+
+.btn.dxleft {
+	background-image: url('./Images/dxleft.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.dxright {
+	background-image: url('./Images/dxright.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.dybuttom {
+	background-image: url('./Images/dybuttom.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.dytop {
+	background-image: url('./Images/dytop.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.dzleft {
+	background-image: url('./Images/dzleft.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.dzright {
+	background-image: url('./Images/dzright.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.sx {
+	background-image: url('./Images/sx.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 35px;
+	height: 35px;
+}
+
+.btn.sy {
+	background-image: url('./Images/sy.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 35px;
+	height: 35px;
+}
+
+.btn.sz {
+	background-image: url('./Images/sz.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 35px;
+	height: 35px;
+}
+
+.btn.axL {
+	background-image: url('./Images/axL.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.axR {
+	background-image: url('./Images/axR.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.ayL {
+	background-image: url('./Images/ayL.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.ayR {
+	background-image: url('./Images/ayR.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.azL {
+	background-image: url('./Images/azL.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+}
+
+.btn.azR {
+	background-image: url('./Images/azR.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
 }
