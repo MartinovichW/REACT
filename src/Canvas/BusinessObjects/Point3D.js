@@ -1,4 +1,4 @@
-﻿export default class Point3D {
+export default class Point3D {
     constructor(x, y, z) {
         this.X = x;
         this.Y = y;

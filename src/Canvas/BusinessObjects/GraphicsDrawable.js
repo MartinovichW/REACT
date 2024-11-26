@@ -1,4 +1,4 @@
-﻿import Model from './Model';
+import Model from './Model';
 
 export default class GraphicsDrawable {
     constructor(canvasRef) {
