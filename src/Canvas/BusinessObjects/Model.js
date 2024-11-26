@@ -133,6 +133,18 @@ export default class Model {
             case 'AZ':
                 this.AZ = value;
                 break;
+            case 'PSI':
+                this.PSI = value;
+                break;
+            case 'FI':
+                this.FI = value;
+                break;
+            case 'Alpha':
+                this.Alpha = value;
+                break;
+            case 'L':
+                this.L = value;
+                break;
             default:
                 break;
         }
@@ -432,7 +444,7 @@ export default class Model {
                     [0, 0, 0, 1]
                 ];
 
-                this.projectionMethod(px, projection, this.DX);
+                this.projectionMethod(px, projection, { dX: this.DX });
                 break;
 
             case "Y":
@@ -443,7 +455,7 @@ export default class Model {
                     [0, 0, 0, 1]
                 ];
 
-                this.projectionMethod(py, projection, this.DY);
+                this.projectionMethod(py, projection, { dY: this.DY });
                 break;
 
             case "A":
@@ -457,7 +469,7 @@ export default class Model {
                 let dX = this.originalPoints[0].X * (1 - Math.cos(this.PSI * this.PI)) + this.originalPoints[0].Z * Math.sin(this.PSI * this.PI);
                 let dY = this.originalPoints[0].Z * (1 - Math.cos(this.PSI * this.PI) * Math.sin(this.FI * this.PI * -1)) - (this.originalPoints[0].X * Math.sin(this.PSI * this.PI) * Math.sin(this.FI * this.PI * -1)) + (this.originalPoints[0].Y * (1 - Math.cos(this.FI * this.PI * -1)));
 
-                this.projectionMethod(pa, projection, dX, dY);
+                this.projectionMethod(pa, projection, { dX: dX, dY: dY });
                 break;
 
             case "O":
@@ -477,7 +489,7 @@ export default class Model {
         this.currentProjection = projection;
     }
 
-    projectionMethod(matrix, projection, dX = 0, dY = 0) {
+    projectionMethod(matrix, projection, { dX = 0, dY = 0 } = {}) {
         this.refreshProjectionPoints();
 
         for (let p of this.projectionPoints.slice(0, this.countPoints)) {

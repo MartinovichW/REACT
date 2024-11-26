@@ -43,9 +43,14 @@ export default class GraphicsDrawable {
         ctx.stroke();
 
         ctx.font = '18px Arial';
-        ctx.fillStyle = 'blue';
+        ctx.fillStyle = 'red';
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
+
+        ctx.fillText(this.model.currentProjection === "X" ? "Z" : "X", size.width - 10, dy + 20);
+        ctx.fillText(this.model.currentProjection === "Y" ? "Z" : "Y", dx - 20, 10);
+
+        ctx.fillStyle = 'blue';
 
         for (let i = 1; i <= size.width * 0.7 / scale - 1; i++) {
             ctx.beginPath();
