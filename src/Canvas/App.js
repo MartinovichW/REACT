@@ -4,6 +4,7 @@ import GraphicsDrawable from './BusinessObjects/GraphicsDrawable';
 import DescriptionTab from './Tabs/Description';
 import TransformationTab from './Tabs/Transformation';
 import ProjectionTab from './Tabs/Projection';
+import LightTab from './Tabs/Light';
 
 import './styles.css';
 
@@ -33,7 +34,7 @@ export default function AppCanvas() {
                     {activeTab === 'Description' && <DescriptionTab model={state.drawable.model} dispatch={dispatch} />}
                     {activeTab === 'Transformation' && <TransformationTab drawable={state.drawable} dispatch={dispatch} />}
                     {activeTab === 'Projection' && <ProjectionTab drawable={state.drawable} dispatch={dispatch} />}
-                    {activeTab === 'Light' && <LightTab />}
+                    {activeTab === 'Light' && <LightTab drawable={state.drawable} dispatch={dispatch} />}
                 </div>
                 <canvas ref={canvasRef} className="canvas" />
             </div>
@@ -48,7 +49,3 @@ const graphicsReducer = (state, action) => {
 
     return { ...state, drawable: state.drawable };
 };
-
-const LightTab = () => (
-    <button>4</button>
-);

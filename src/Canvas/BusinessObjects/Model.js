@@ -9,12 +9,8 @@ export default class Model {
         this.S = 30.0;
         this.PI = -1.0 * Math.PI / 180.0;
         this.currentProjection = "Z";
-        this.LightMode = "Off";
         this.DX = 0.0;
         this.DY = 0.0;
-        this.LX = 0.0;
-        this.LY = 0.0;
-        this.LZ = 0.0;
 
         this.A = 8.0;
         this.minA = 7.0;
@@ -45,6 +41,14 @@ export default class Model {
         this.FI = 30.0;
         this.Alpha = 45.0;
         this.L = 1.0;
+
+        this.LX = 0.0;
+        this.LY = 0.0;
+        this.LZ = 0.0;
+        this.LDX = 1.0;
+        this.LDY = 1.0;
+        this.LDZ = 1.0;
+        this.LightMode = "Off";
     }
 
     get countPoints() {
@@ -144,6 +148,18 @@ export default class Model {
                 break;
             case 'L':
                 this.L = value;
+                break;
+            case 'LDX':
+                this.LDX = value;
+                break;
+            case 'LDY':
+                this.LDY = value;
+                break;
+            case 'LDZ':
+                this.LDZ = value;
+                break;
+            case 'LightMode':
+                this.LightMode = value;
                 break;
             default:
                 break;
@@ -512,5 +528,82 @@ export default class Model {
             proj.Y = orig.Y;
             proj.Z = orig.Z;
         }
+    }
+
+    calculateLight(command) {
+        switch (command) {
+            case "41":
+                this.LX += this.LDX * this.S * -1;
+                break;
+            case "42":
+                this.LX += this.LDX * this.S;
+                break;
+            case "43":
+                this.LY += this.LDY * this.S;
+                break;
+            case "44":
+                this.LY += this.LDY * this.S * -1;
+                break;
+            case "45":
+                this.LZ += this.LDZ * this.S * -1;
+                break;
+            case "46":
+                this.LZ += this.LDZ * this.S;
+                break;
+            default:
+                break;
+        }
+
+        this.calculateProjection(this.currentProjection);
+    }
+
+    getPlanes() {
+        const plainPoint = [
+            [0, 1, 2, 3],
+            [3, 2, 5, 4],
+            [4, 5, 6, 7],
+            [7, 6, 1, 0],
+            [0, 3, 4, 7],
+            [1, 6, 5, 2],
+            [8, this.countPoints - this.N, this.countPoints - this.N + 1, 9],
+            [this.countPoints - this.N - 1, this.countPoints - 1, this.countPoints - this.N, 8]
+        ];
+
+        const rowLength = plainPoint.length;
+        const colLength = plainPoint[0].length;
+        const planes = [];
+
+        for (let i = 0; i < rowLength - 2; i++) {
+            planes.push([]);
+            for (let j = 0; j < colLength; j++) {
+                planes[i].push(this.p(plainPoint[i][j]));
+            }
+        }
+
+        for (let i = rowLength - 2; i < this.countPlanes - 1; i++) {
+            planes.push([]);
+            for (let j = 0; j < colLength; j++) {
+                planes[i].push(this.p(plainPoint[6][j]));
+            }
+
+            plainPoint[6][0] += 1;
+            plainPoint[6][1] += 1;
+            plainPoint[6][2] += 1;
+            plainPoint[6][3] += 1;
+        }
+
+        planes.push([]);
+        for (let j = 0; j < colLength; j++) {
+            planes[planes.length - 1].push(this.p(plainPoint[7][j]));
+        }
+
+        planes.push([]);
+        planes.push([]);
+        for (let j = 8; j < 8 + this.N; j++) {
+            planes[planes.length - 2].push(this.p(j));
+            planes[planes.length - 1].push(this.p(j + this.N));
+        }
+
+        return planes;
     }
 }
