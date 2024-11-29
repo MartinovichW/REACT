@@ -1,12 +1,18 @@
+import GraphicsDrawable from '../BusinessObjects/GraphicsDrawable';
 import Stepper from '../Components/Stepper';
 
-export default function LightTab({ drawable, dispatch }) {
-    const handleExtraAction = (code) => {
+interface LightTabProps {
+    drawable: GraphicsDrawable;
+    dispatch: React.Dispatch<any>;
+}
+
+export default function LightTab({ drawable, dispatch }: LightTabProps) {
+    const handleExtraAction = (code: string) => {
         drawable.model.calculateLight(code);
         drawable.draw();
     };
 
-    const handleOptionChange = (event) => {
+    const handleOptionChange = (event: any) => {
         dispatch({ fieldName: 'LightMode', newValue: event.target.value, needDraw: true });
     };
 
@@ -15,7 +21,7 @@ export default function LightTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th colSpan="3">Light mode</th>
+                        <th colSpan={3}>Light mode</th>
                     </tr>
                     <tr>
                         <td className="td">
@@ -56,7 +62,7 @@ export default function LightTab({ drawable, dispatch }) {
                     <div className="table-spacing" /><table className="table">
                     <tbody>
                         <tr className="tr">
-                            <th colSpan="3">Move light source</th>
+                            <th colSpan={3}>Move light source</th>
                         </tr>
                         <tr>
                             <Stepper field='LDX' value={drawable.model.LDX} dispatch={dispatch} min={1} max={3} needDraw={false}
@@ -80,4 +86,4 @@ export default function LightTab({ drawable, dispatch }) {
             </>}
         </>
     );
-};
+}

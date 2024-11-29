@@ -1,7 +1,13 @@
+import GraphicsDrawable from '../BusinessObjects/GraphicsDrawable';
 import Stepper from '../Components/Stepper';
 
-export default function TransformationTab({ drawable, dispatch }) {
-    const handleExtraAction = (code) => {
+interface TransformationTabProps {
+    drawable: GraphicsDrawable;
+    dispatch: React.Dispatch<any>;
+}
+
+export default function TransformationTab({ drawable, dispatch }: TransformationTabProps) {
+    const handleExtraAction = (code: string) => {
         drawable.model.calculateTransformation(code);
         drawable.draw();
     };
@@ -11,7 +17,7 @@ export default function TransformationTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th colSpan="3">Move</th>
+                        <th colSpan={3}>Move</th>
                     </tr>
                     <tr>
                         <Stepper field='MX' value={drawable.model.MX} dispatch={dispatch} min={1} max={3} needDraw={false}
@@ -36,7 +42,7 @@ export default function TransformationTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th className="th" colSpan="3">Scale</th>
+                        <th className="th" colSpan={3}>Scale</th>
                     </tr>
                     <tr>
                         <Stepper field='SX' value={drawable.model.SX} dispatch={dispatch} min={0.5} max={2.0} step={0.5} needDraw={false}
@@ -55,7 +61,7 @@ export default function TransformationTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th className="th" colSpan="3">Rotate</th>
+                        <th className="th" colSpan={3}>Rotate</th>
                     </tr>
                     <tr>
                         <Stepper field='AX' value={drawable.model.AX} dispatch={dispatch} min={5} max={180} step={5} needDraw={false}
@@ -78,4 +84,4 @@ export default function TransformationTab({ drawable, dispatch }) {
             </table>
         </>
     );
-};
+}

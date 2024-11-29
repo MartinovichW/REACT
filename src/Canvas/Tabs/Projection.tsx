@@ -1,7 +1,13 @@
+import GraphicsDrawable from '../BusinessObjects/GraphicsDrawable';
 import Stepper from '../Components/Stepper';
 
-export default function ProjectionTab({ drawable, dispatch }) {
-    const handleExtraAction = (code) => {
+interface ProjectionTabProps {
+    drawable: GraphicsDrawable;
+    dispatch: React.Dispatch<any>;
+}
+
+export default function ProjectionTab({ drawable, dispatch }: ProjectionTabProps) {
+    const handleExtraAction = (code: string) => {
         drawable.model.calculateProjection(code);
         drawable.draw();
     };
@@ -11,7 +17,7 @@ export default function ProjectionTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th colSpan="3">Parallel</th>
+                        <th colSpan={3}>Parallel</th>
                     </tr>
                     <tr>
                         <td className="td">
@@ -30,14 +36,14 @@ export default function ProjectionTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th className="th" colSpan="3">Axonometric</th>
+                        <th className="th" colSpan={3}>Axonometric</th>
                     </tr>
                     <tr>
                         <Stepper field='PSI' value={drawable.model.PSI} dispatch={dispatch} min={0} max={360} step={5} needDraw={false} />
                         <Stepper field='FI' value={drawable.model.FI} dispatch={dispatch} min={0} max={360} step={5} needDraw={false} />
                     </tr>
                     <tr>
-                        <td className="td" colSpan="2">
+                        <td className="td" colSpan={2}>
                             <button onClick={() => handleExtraAction("A")}>Axonometric</button>
                         </td>
                     </tr>
@@ -47,14 +53,14 @@ export default function ProjectionTab({ drawable, dispatch }) {
             <table className="table">
                 <tbody>
                     <tr className="tr">
-                        <th className="th" colSpan="3">Oblique</th>
+                        <th className="th" colSpan={3}>Oblique</th>
                     </tr>
                     <tr>
                         <Stepper field='L' value={drawable.model.L} dispatch={dispatch} min={1} max={4} step={1} needDraw={false} />
                         <Stepper field='Alpha' value={drawable.model.Alpha} dispatch={dispatch} min={0} max={360} step={5} needDraw={false} />
                     </tr>
                     <tr>
-                        <td className="td" colSpan="2">
+                        <td className="td" colSpan={2}>
                             <button onClick={() => handleExtraAction("O")}>Oblique</button>
                         </td>
                     </tr>
@@ -62,4 +68,4 @@ export default function ProjectionTab({ drawable, dispatch }) {
             </table>
         </>
     );
-};
+}

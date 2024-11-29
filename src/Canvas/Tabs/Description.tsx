@@ -1,6 +1,12 @@
+import Model from '../BusinessObjects/Model';
 import Stepper from '../Components/Stepper';
 
-export default function DescriptionTab({ model, dispatch }) {
+interface DescriptionTabProps {
+    model: Model;
+    dispatch: React.Dispatch<any>;
+}
+
+export default function DescriptionTab({ model, dispatch }: DescriptionTabProps) {
     return (
         <>
             <div className="image-container" />
@@ -19,4 +25,4 @@ export default function DescriptionTab({ model, dispatch }) {
             </table>
         </>
     );
-};
+}

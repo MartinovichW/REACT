@@ -1,6 +1,49 @@
 import Point3D from './Point3D';
 
 export default class Model {
+    originalPoints: Point3D[];
+    projectionPoints: Point3D[];
+    allPoints: [Point3D, Point3D][];
+    S: number;
+    PI: number;
+    currentProjection: string;
+    DX: number;
+    DY: number;
+    A: number;
+    minA: number;
+    B: number;
+    minB: number;
+    C: number;
+    R: number;
+    maxR: number;
+    dX: number;
+    mindX: number;
+    maxdX: number;
+    dZ: number;
+    mindZ: number;
+    maxdZ: number;
+    N: number;
+    MX: number;
+    MY: number;
+    MZ: number;
+    SX: number;
+    SY: number;
+    SZ: number;
+    AX: number;
+    AY: number;
+    AZ: number;
+    PSI: number;
+    FI: number;
+    Alpha: number;
+    L: number;
+    LX: number;
+    LY: number;
+    LZ: number;
+    LDX: number;
+    LDY: number;
+    LDZ: number;
+    LightMode: string;
+
     constructor() {
         this.originalPoints = Array.from({ length: 152 }, () => new Point3D(0.0, 0.0, 0.0));
         this.projectionPoints = Array.from({ length: 152 }, () => new Point3D(0.0, 0.0, 0.0));
@@ -51,21 +94,21 @@ export default class Model {
         this.LightMode = "Off";
     }
 
-    get countPoints() {
+    get countPoints(): number {
         return 8 + (this.N * 2);
     }
 
-    get countPlanes() {
+    get countPlanes(): number {
         return 6 + this.N;
     }
 
-    get p() {
-        return (i) => {
+    get p(): (i: number) => Point3D {
+        return (i: number) => {
             return this.currentProjection === "Z" ? this.originalPoints[i] : this.projectionPoints[i];
         };
     }
 
-    setValue(fieldName, value){
+    setValue(fieldName: string, value: any): void {
         switch (fieldName) {
             case 'A':
                 if (this.minA <= value) {
@@ -166,7 +209,7 @@ export default class Model {
         }
     }
 
-    calculateMinMax() {
+    calculateMinMax(): void {
         this.minA = this.dX + this.R + 1;
         this.minB = this.dZ + this.R + 1;
 
@@ -178,7 +221,7 @@ export default class Model {
         this.maxdZ = this.B - 1 - this.R;
     }
 
-    setVariables(dx, dy) {
+    setVariables(dx: number, dy: number): void {
         if (dx === 0 && dy === 0) return;
 
         if (this.DX !== dx || this.DY !== dy) {
@@ -193,7 +236,7 @@ export default class Model {
         }
     }
 
-    calculatePoints() {
+    calculatePoints(): void {
         let x = this.DX + (this.A * this.S);
         let y = this.DY - (this.C * this.S);
         let z = this.B * this.S;
@@ -230,7 +273,7 @@ export default class Model {
         this.originalPoints[7].Y = this.DY;
         this.originalPoints[7].Z = z;
 
-        let inc = 360 / this.N, alpha1, alpha2 = inc;
+        let inc = 360 / this.N, alpha1: number, alpha2 = inc;
 
         for (let i = 8; i < 8 + this.N; i++) {
             alpha1 = alpha2 * Math.PI / 180;
@@ -252,7 +295,7 @@ export default class Model {
         this.calculateProjection(this.currentProjection);
     }
 
-    calculateTransformation(command) {
+    calculateTransformation(command: string): void {
         switch (command) {
             case "11":
                 this.executeTransformation(this.move, { dsax: this.MX * -1 * this.S });
@@ -342,7 +385,12 @@ export default class Model {
         this.calculateProjection(this.currentProjection);
     }
 
-    executeTransformation(transformationMethod, { dsax = 0, dsay = 0, dsaz = 0, dX = 0, dY = 0, dZ = 0 } = { }) {
+    executeTransformation(
+        transformationMethod: (point: Point3D, dsax: number, dsay: number, dsaz: number) => [number, number, number, number],
+        options: { dsax?: number; dsay?: number; dsaz?: number; dX?: number; dY?: number; dZ?: number } = {}
+    ): void {
+        const { dsax = 0, dsay = 0, dsaz = 0, dX = 0, dY = 0, dZ = 0 } = options;
+
         for (let point of this.originalPoints.slice(0, this.countPoints)) {
             const temp = transformationMethod(point, dsax, dsay, dsaz);
 
@@ -352,7 +400,7 @@ export default class Model {
         }
     }
 
-    move(p, dx, dy, dz) {
+    move(p: Point3D, dx: number, dy: number, dz: number): [number, number, number, number] {
         const t = [
             [1, 0, 0, 0],
             [0, 1, 0, 0],
@@ -360,7 +408,7 @@ export default class Model {
             [dx, dy, dz, 1]
         ];
 
-        const pt = [
+        const pt: [number, number, number, number] = [
             (p.X * t[0][0]) + (p.Y * t[1][0]) + (p.Z * t[2][0]) + (p.A * t[3][0]),
             (p.X * t[0][1]) + (p.Y * t[1][1]) + (p.Z * t[2][1]) - (p.A * t[3][1]),
             (p.X * t[0][2]) + (p.Y * t[1][2]) + (p.Z * t[2][2]) + (p.A * t[3][2]),
@@ -370,7 +418,7 @@ export default class Model {
         return pt;
     }
 
-    scale(p, sx, sy, sz) {
+    scale(p: Point3D, sx: number, sy: number, sz: number): [number, number, number, number] {
         const s = [
             [sx, 0, 0, 0],
             [0, sy, 0, 0],
@@ -378,7 +426,7 @@ export default class Model {
             [0, 0, 0, 1]
         ];
 
-        const ps = [
+        const ps: [number, number, number, number] = [
             (p.X * s[0][0]) + (p.Y * s[1][0]) + (p.Z * s[2][0]) + (p.A * s[3][0]),
             (p.X * s[0][1]) + (p.Y * s[1][1]) + (p.Z * s[2][1]) + (p.A * s[3][1]),
             (p.X * s[0][2]) + (p.Y * s[1][2]) + (p.Z * s[2][2]) + (p.A * s[3][2]),
@@ -388,7 +436,7 @@ export default class Model {
         return ps;
     }
 
-    rotate(p, ax, ay, az) {
+    rotate(p: Point3D, ax: number, ay: number, az: number): [number, number, number, number] {
         const PI = -1.0 * Math.PI / 180.0;
 
         if (ax !== 0) {
@@ -399,7 +447,7 @@ export default class Model {
                 [0, 0, 0, 1]
             ];
 
-            const pr = [
+            const pr: [number, number, number, number] = [
                 (p.X * rx[0][0]) + (p.Y * rx[1][0]) + (p.Z * rx[2][0]) - (p.A * rx[3][0]),
                 (p.X * rx[0][1]) + (p.Y * rx[1][1]) + (p.Z * rx[2][1]) + (p.A * rx[3][1]),
                 (p.X * rx[0][2]) + (p.Y * rx[1][2]) + (p.Z * rx[2][2]) + (p.A * rx[3][2]),
@@ -417,7 +465,7 @@ export default class Model {
                 [0, 0, 0, 1]
             ];
 
-            const pr = [
+            const pr: [number, number, number, number] = [
                 (p.X * ry[0][0]) + (p.Y * ry[1][0]) + (p.Z * ry[2][0]) - (p.A * ry[3][0]),
                 (p.X * ry[0][1]) + (p.Y * ry[1][1]) + (p.Z * ry[2][1]) + (p.A * ry[3][1]),
                 (p.X * ry[0][2]) + (p.Y * ry[1][2]) + (p.Z * ry[2][2]) + (p.A * ry[3][2]),
@@ -435,7 +483,7 @@ export default class Model {
                 [0, 0, 0, 1]
             ];
 
-            const pr = [
+            const pr: [number, number, number, number] = [
                 (p.X * rz[0][0]) + (p.Y * rz[1][0]) + (p.Z * rz[2][0]) - (p.A * rz[3][0]),
                 (p.X * rz[0][1]) + (p.Y * rz[1][1]) + (p.Z * rz[2][1]) + (p.A * rz[3][1]),
                 (p.X * rz[0][2]) + (p.Y * rz[1][2]) + (p.Z * rz[2][2]) + (p.A * rz[3][2]),
@@ -445,10 +493,10 @@ export default class Model {
             return pr;
         }
 
-        return [];
+        return [0, 0, 0, 0];
     }
 
-    calculateProjection(projection) {
+    calculateProjection(projection: string): void {
         let px, py, pa, po;
 
         switch (projection) {
@@ -505,7 +553,12 @@ export default class Model {
         this.currentProjection = projection;
     }
 
-    projectionMethod(matrix, projection, { dX = 0, dY = 0 } = {}) {
+    projectionMethod(
+        matrix: number[][],
+        projection: string,
+        options: { dX?: number; dY?: number } = {}
+    ): void {
+        const { dX = 0, dY = 0 } = options;
         this.refreshProjectionPoints();
 
         for (let p of this.projectionPoints.slice(0, this.countPoints)) {
@@ -522,7 +575,7 @@ export default class Model {
         }
     }
 
-    refreshProjectionPoints() {
+    refreshProjectionPoints(): void {
         for (let [orig, proj] of this.allPoints.slice(0, this.countPoints)) {
             proj.X = orig.X;
             proj.Y = orig.Y;
@@ -530,7 +583,7 @@ export default class Model {
         }
     }
 
-    calculateLight(command) {
+    calculateLight(command: string): void {
         switch (command) {
             case "41":
                 this.LX += this.LDX * this.S * -1;
@@ -557,8 +610,8 @@ export default class Model {
         this.calculateProjection(this.currentProjection);
     }
 
-    getPlanes() {
-        const plainPoint = [
+    getPlanes(): Point3D[][] {
+        const plainPoint: number[][] = [
             [0, 1, 2, 3],
             [3, 2, 5, 4],
             [4, 5, 6, 7],
@@ -571,7 +624,7 @@ export default class Model {
 
         const rowLength = plainPoint.length;
         const colLength = plainPoint[0].length;
-        const planes = [];
+        const planes: Point3D[][] = [];
 
         for (let i = 0; i < rowLength - 2; i++) {
             planes.push([]);
