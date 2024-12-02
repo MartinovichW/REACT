@@ -1,0 +1,158 @@
+@primary-color: #ccc;
+@hover-color: #ddd;
+@active-color: #ccc;
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#canvasPage {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+
+	.tabPanel {
+		overflow: hidden;
+		border: 1px solid @primary-color;
+		background-color: #f1f1f1;
+
+		button {
+			border: none;
+			padding: 14px 16px;
+
+			&:hover {
+				background-color: @hover-color;
+			}
+
+			&.active {
+				background-color: @active-color;
+			}
+		}
+	}
+
+	.tabContent {
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+
+		.tabControls {
+			flex: 1;
+			border: 1px solid @primary-color;
+		}
+	}
+
+	.canvas {
+		border: 1px solid @primary-color;
+		overflow: auto;
+		flex: 2;
+	}
+}
+
+.image-container {
+	background-image: url('./Images/description.png');
+	background-size: cover;
+	margin: 0 auto;
+	width: 471px;
+	height: 587px;
+}
+
+.table {
+	width: 100%;
+	border: 1px solid @primary-color;
+	border-radius: 10px;
+
+	.table-spacing {
+		height: 30px;
+	}
+
+	.td {
+		width: 70px;
+		height: 50px;
+		border: 1px solid @primary-color;
+		border-radius: 10px;
+		text-align: center;
+		font-size: 22px;
+	}
+
+	.tr {
+		height: 50px;
+	}
+}
+
+.btn {
+	&.dxleft, &.dxright, &.dybuttom, &.dytop, &.dzleft, &.dzright, &.axL, &.axR, &.ayL, &.ayR, &.azL, &.azR {
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 25px;
+		height: 25px;
+	}
+
+	&.sx, &.sy, &.sz {
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 35px;
+		height: 35px;
+	}
+
+	&.dxleft {
+		background-image: url('./Images/dxleft.png');
+	}
+
+	&.dxright {
+		background-image: url('./Images/dxright.png');
+	}
+
+	&.dybuttom {
+		background-image: url('./Images/dybuttom.png');
+	}
+
+	&.dytop {
+		background-image: url('./Images/dytop.png');
+	}
+
+	&.dzleft {
+		background-image: url('./Images/dzleft.png');
+	}
+
+	&.dzright {
+		background-image: url('./Images/dzright.png');
+	}
+
+	&.sx {
+		background-image: url('./Images/sx.png');
+	}
+
+	&.sy {
+		background-image: url('./Images/sy.png');
+	}
+
+	&.sz {
+		background-image: url('./Images/sz.png');
+	}
+
+	&.axL {
+		background-image: url('./Images/axL.png');
+	}
+
+	&.axR {
+		background-image: url('./Images/axR.png');
+	}
+
+	&.ayL {
+		background-image: url('./Images/ayL.png');
+	}
+
+	&.ayR {
+		background-image: url('./Images/ayR.png');
+	}
+
+	&.azL {
+		background-image: url('./Images/azL.png');
+	}
+
+	&.azR {
+		background-image: url('./Images/azR.png');
+	}
+}

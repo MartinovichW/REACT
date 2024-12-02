@@ -6,7 +6,7 @@ import TransformationTab from './Tabs/Transformation';
 import ProjectionTab from './Tabs/Projection';
 import LightTab from './Tabs/Light';
 
-import './styles.css';
+import './Canvas.less';
 
 export default function AppCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -22,8 +22,8 @@ export default function AppCanvas() {
     };
 
     return (
-        <div className="container">
-            <div className="tab">
+        <div id="canvasPage">
+            <div className="tabPanel">
                 <button
                     className={`tablinks ${activeTab === 'Description' ? 'active' : ''}`}
                     onClick={() => openTab('Description')}>
@@ -45,8 +45,8 @@ export default function AppCanvas() {
                     Light
                 </button>
             </div>
-            <div className="content">
-                <div className="controls">
+            <div className="tabContent">
+                <div className="tabControls">
                     {activeTab === 'Description' &&
                         <DescriptionTab model={state.drawable.model} dispatch={dispatch} />}
                     {activeTab === 'Transformation' &&
